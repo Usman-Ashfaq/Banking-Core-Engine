@@ -1,0 +1,21 @@
+<!-- FILE: templates/audit.html -->
+{% extends 'base.html' %}
+{% block title %}Audit Trail - CoreBank{% endblock %}
+{% block content %}
+<h4>Audit Trail</h4>
+<table class="table table-sm">
+<thead><tr><th>Time</th><th>Actor</th><th>Action</th><th>Target</th></tr></thead>
+<tbody>
+{% for l in logs %}
+<tr>
+<td>{{ l.time.strftime('%Y-%m-%d %H:%M') }}</td>
+<td>{{ l.actor }}</td>
+<td>{{ l.action }}</td>
+<td>{{ l.target }}</td>
+</tr>
+{% else %}
+<tr><td colspan="4" class="text-muted">No audit logs</td></tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,52 @@
+<!-- FILE: templates/customer.html -->
+{% extends 'base.html' %}
+{% block title %}Customers - CoreBank{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+<h4>Customers</h4>
+<button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#addClient">Add Customer</button>
+</div>
+
+
+<table class="table table-striped">
+<thead>
+<tr><th>#</th><th>Name</th><th>CNIC</th><th>Phone</th><th>Actions</th></tr>
+</thead>
+<tbody>
+{% for c in customers %}
+<tr>
+<td>{{ c.cid }}</td>
+<td>{{ c.cname }}</td>
+<td>{{ c.cnic }}</td>
+<td>{{ c.phone }}</td>
+<td>
+<a href="/clients/remove/{{ c.cid }}" class="btn btn-sm btn-danger" onclick="return confirm('Delete customer?')">Delete</a>
+</td>
+</tr>
+{% else %}
+<tr><td colspan="5" class="text-muted">No customers yet.</td></tr>
+{% endfor %}
+</tbody>
+</table>
+
+
+<!-- Add Customer Modal -->
+<div class="modal fade" id="addClient" tabindex="-1">
+<div class="modal-dialog">
+<div class="modal-content">
+<form method="POST" action="/clients/new">
+<div class="modal-header"><h5 class="modal-title">Add Customer</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+<div class="modal-body">
+<div class="mb-2"><label>Name</label><input name="name" class="form-control" required></div>
+<div class="mb-2"><label>CNIC</label><input name="cnic" class="form-control" required></div>
+<div class="mb-2"><label>Contact</label><input name="contact" class="form-control" required></div>
+</div>
+<div class="modal-footer">
+<button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+<button class="btn nbp-green-btn">Add</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+{% endblock %}

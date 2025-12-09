@@ -1,0 +1,50 @@
+<!-- FILE: templates/accounts.html -->
+{% extends 'base.html' %}
+{% block title %}Accounts - CoreBank{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+<h4>Accounts</h4>
+<button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#addAccount">New Account</button>
+</div>
+
+
+<table class="table table-hover">
+<thead><tr><th>Acc No</th><th>Holder</th><th>Type</th><th>Email</th><th>Balance</th></tr></thead>
+<tbody>
+{% for a in accounts %}
+<tr>
+<td>{{ a.acc_no }}</td>
+<td>{{ a.holder.cname }}</td>
+<td>{{ a.acc_type }}</td>
+<td>{{ a.mail }}</td>
+<td>Rs {{ '%.2f'|format(a.funds) }}</td>
+</tr>
+{% else %}
+<tr><td colspan="5" class="text-muted">No accounts yet</td></tr>
+{% endfor %}
+</tbody>
+</table>
+
+
+<!-- Add Account Modal -->
+<div class="modal fade" id="addAccount" tabindex="-1">
+<div class="modal-dialog">
+<div class="modal-content">
+<form method="POST" action="/bank/new">
+<div class="modal-header"><h5 class="modal-title">New Account</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+<div class="modal-body">
+<div class="mb-2"><label>Customer</label>
+<select name="customer_id" class="form-select" required>
+{% for c in customers %}<option value="{{ c.cid }}">{{ c.cname }} - {{ c.cnic }}</option>{% endfor %}
+</select>
+</div>
+<div class="mb-2"><label>Type</label><select name="type" class="form-select"><option>Savings</option><option>Current</option></select></div>
+<div class="mb-2"><label>Initial Balance</label><input name="balance" type="number" step="0.01" class="form-control" required></div>
+<div class="mb-2"><label>Email</label><input name="email" type="email" class="form-control"></div>
+</div>
+<div class="modal-footer"><button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button><button class="btn nbp-green-btn">Create</button></div>
+</form>
+</div>
+</div>
+</div>
+{% endblock %}

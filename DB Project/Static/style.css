@@ -1,0 +1,19 @@
+<!-- FILE: static/css/style.css -->
+/* small NBP-like theme and layout */
+:root{
+--nbp-green:#0a6b29;
+--nbp-dark:#06451b;
+}
+body{background:#f5f7f6}
+.navbar.nbp-green{background:var(--nbp-green)}
+.nbp-dark{background:var(--nbp-dark);min-width:220px;color:#fff;height:100vh}
+.sidebar .nav-link{color:rgba(255,255,255,0.9);padding:10px}
+.nbp-green-btn{background:var(--nbp-green);color:#fff;border:none}
+.nbp-green-text{color:var(--nbp-green)}
+.card{border-radius:8px}
+
+
+/* responsive tweak to collapse sidebar on small screens */
+@media(max-width:767px){
+.sidebar{display:none}
+}

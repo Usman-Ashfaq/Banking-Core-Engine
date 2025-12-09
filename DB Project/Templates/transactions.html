@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Transactions</h2>
+
+<!-- Deposit / Withdraw Form -->
+<form action="/transactions/new" method="POST" class="mb-4">
+    <div class="mb-2">
+        <label>Type:</label>
+        <select name="type" class="form-select">
+            <option value="Deposit">Deposit</option>
+            <option value="Withdraw">Withdraw</option>
+        </select>
+    </div>
+    <div class="mb-2">
+        <label>Account:</label>
+        <select name="account" class="form-select">
+            {% for acc in accounts %}
+            <option value="{{ acc.acc_no }}">{{ acc.acc_no }} - {{ acc.holder.cname }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-2">
+        <label>Amount:</label>
+        <input type="number" step="0.01" name="amount" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<!-- Transfer Form -->
+<form action="/transactions/new" method="POST">
+    <input type="hidden" name="type" value="Transfer">
+    <div class="mb-2">
+        <label>From Account:</label>
+        <select name="from_account" class="form-select">
+            {% for acc in accounts %}
+            <option value="{{ acc.acc_no }}">{{ acc.acc_no }} - {{ acc.holder.cname }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-2">
+        <label>To Account:</label>
+        <input type="number" name="to_account" class="form-control" placeholder="Account Number" required>
+    </div>
+    <div class="mb-2">
+        <label>Amount:</label>
+        <input type="number" step="0.01" name="amount" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-success">Transfer</button>
+</form>
+
+<hr>
+
+<h3>Transaction History</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Debit</th>
+            <th>Credit</th>
+            <th>Amount</th>
+            <th>Type</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for t in txns %}
+        <tr>
+            <td>{{ t.tid }}</td>
+            <td>{{ t.debit or "-" }}</td>
+            <td>{{ t.credit or "-" }}</td>
+            <td>{{ t.amount }}</td>
+            <td>{{ t.nature }}</td>
+            <td>{{ t.timestamp.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

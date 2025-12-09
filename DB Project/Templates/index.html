@@ -1,0 +1,45 @@
+<!-- FILE: templates/index.html -->
+{% extends 'base.html' %}
+{% block title %}Dashboard - CoreBank{% endblock %}
+{% block content %}
+<div class="row mb-4">
+<div class="col-12">
+<h3>Welcome, {{ session.username }}</h3>
+<p class="text-muted">Overview of your customers and accounts</p>
+</div>
+</div>
+
+
+<div class="row g-3">
+<div class="col-md-3">
+<div class="card p-3 shadow-sm">
+<h6>Customers</h6>
+<h2>{{ cust_count }}</h2>
+</div>
+</div>
+<div class="col-md-3">
+<div class="card p-3 shadow-sm">
+<h6>Accounts</h6>
+<h2>{{ acc_count }}</h2>
+</div>
+</div>
+<div class="col-md-3">
+<div class="card p-3 shadow-sm">
+<h6>Total Balance</h6>
+<h2>Rs {{ '%.2f'|format(total_balance) }}</h2>
+</div>
+</div>
+<div class="col-md-3">
+<div class="card p-3 shadow-sm">
+<h6>Recent Transactions</h6>
+<ul class="list-unstyled small">
+{% for t in recent %}
+<li>{{ t.nature }} - Rs {{ '%.2f'|format(t.amount) if t.amount else '0.00' }} <span class="text-muted">({{ t.timestamp.strftime('%b %d') }})</span></li>
+{% else %}
+<li class="text-muted">No recent transactions</li>
+{% endfor %}
+</ul>
+</div>
+</div>
+</div>
+{% endblock %}
