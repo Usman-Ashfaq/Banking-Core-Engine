@@ -52,7 +52,7 @@ class Txn(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     uid = db.Column(db.Integer)
 
-
+#audit class
 class Audit(db.Model):
     __tablename__ = "audit_trail"
     lid = db.Column(db.Integer, primary_key=True)
